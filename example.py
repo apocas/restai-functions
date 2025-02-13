@@ -1,4 +1,4 @@
-from restai_functions.restai import Restai
+from restai_functions import Restai
 
 
 restai = Restai(url='https://XXXXXXXXXXXXXX', api_key='XXXXXXXXXXXXXX')
