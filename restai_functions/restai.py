@@ -39,8 +39,8 @@ class Restai:
         """Calls the API endpoint with a given function name and parameter."""
         try:
             # Extract project name from function name (removing "func_")
-            project_name = function_name.replace("func_", "").replace("_", " ")
-
+            project_name = function_name
+            
             response = requests.post(
                 f'{self.url}/{project_name}/question',
                 json={'question': parameter},
@@ -64,7 +64,7 @@ class Restai:
         module_globals = globals()  # Get global scope of the module
 
         for s in strings:
-            func_name = f"func_{s.lower().replace(' ', '_')}"  # Ensure valid function names
+            func_name = f"{s.lower().replace(' ', '_')}"  # Ensure valid function names
             
             def func(template_func_name=func_name):
                 return self.call_project(template_func_name, "Your default parameter")
