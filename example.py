@@ -1,10 +1,3 @@
-# restai-functions
-
-Call RESTai projects like functions in Python
-
-## Usage
-
-```python
 from restai_functions.restai import Restai
 
 
@@ -16,4 +9,3 @@ print(restai.func_another_project("Give me the latest update."))  # Another proj
 # Call function by name dynamically
 print(restai.call("func_project1", "How is it performing?"))
 print(restai.call("func_another_project", "What is the latest update?"))
-```
