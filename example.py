@@ -1,11 +1,11 @@
 from restai_functions import Restai
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
-restai = Restai(url='https://XXXXXXXXXXXXXX', api_key='XXXXXXXXXXXXXX')
+restai = Restai(url=os.environ.get("RESTAI_URL"), api_key=os.environ.get("RESTAI_KEY"))
 
-print(restai.project1("What is the status?"))  # Assuming 'project1' exists
-print(restai.another_project("Give me the latest update."))  # Another project
+##print(restai.projects)
 
-# Call function by name dynamically
-print(restai.call("project1", "How is it performing?"))
-print(restai.call("another_project", "What is the latest update?"))
+print(restai.pedro_inference("Hi I'm Pedro"))
