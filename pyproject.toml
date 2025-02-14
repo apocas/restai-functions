@@ -4,7 +4,7 @@ version = "0.0.1"
 authors = [{ name = "Pedro Dias", email = "petermdias@gmail.com" }]
 description = "Call RESTai projects using direct functions in Python"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.12"
 classifiers = [
   "Programming Language :: Python :: 3",
   "Operating System :: OS Independent",
@@ -16,5 +16,6 @@ dependencies = ["requests"]
 Homepage = "https://github.com/apocas/restai-functions"
 
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
