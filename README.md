@@ -6,7 +6,7 @@ Call RESTai projects like functions in Python
 
 ### Create a RESTai Project
 <div align="center">
-  <img src="https://github.com/apocas/restai-functions/blob/master/readme/assets/project.png"  alt="RESTai Project" width="50%"/>
+  <img src="https://raw.githubusercontent.com/apocas/restai-functions/master/readme/assets/project.png"  alt="RESTai Project" width="50%"/>
 </div>
 
 ### Install
