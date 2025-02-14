@@ -7,13 +7,8 @@ Call RESTai projects like functions in Python
 ```python
 from restai_functions import Restai
 
+restai = Restai(url=os.environ.get("RESTAI_URL"), api_key=os.environ.get("RESTAI_KEY"), auto_load=True)
 
-restai = Restai(url='https://XXXXXXXXXXXXXX', api_key='XXXXXXXXXXXXXX')
+print(restai.yoda_speak("Hi I'm Pedro"))
 
-print(restai.project1("What is the status?"))  # Assuming 'project1' exists
-print(restai.another_project("Give me the latest update."))  # Another project
-
-# Call function by name dynamically
-print(restai.call("project1", "How is it performing?"))
-print(restai.call("another_project", "What is the latest update?"))
 ```

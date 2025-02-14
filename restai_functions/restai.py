@@ -1,7 +1,7 @@
 import requests
 
 class Restai:
-    def __init__(self, url, api_key):
+    def __init__(self, url, api_key, auto_load):
         self.url = url
         self.api_key = api_key
         self.headers = {
@@ -9,11 +9,18 @@ class Restai:
             'Authorization': f'Bearer {api_key}',
         }
         
-        self.projects = self._get_projects()
-        self._create_functions_from_strings(self.projects)
+        if auto_load == True:
+            self.load_functions()
+    
+    def load_functions(self):
+        project_names = []
+        projects = self._get_projects()
+        for project in projects:
+            project_names.append(project['name'])
+        self._create_functions_from_strings(project_names)
 
     def _get_projects(self):
-        """Fetches project names from the API."""
+        """Fetches projects from the API."""
         output = []
         try:
             response = requests.get(
@@ -24,9 +31,7 @@ class Restai:
 
             if response.status_code == 200:
                 response_data = response.json()
-                projects = response_data.get('projects', [])
-                for project in projects:
-                    output.append(project['name'])
+                return response_data.get('projects', [])
             else:
                 print(f"Failed: {response.status_code}, {response.text}")
         except Exception as e:
@@ -60,8 +65,8 @@ class Restai:
         for s in strings:
             func_name = s.lower().replace(' ', '_')  # Ensure valid function names
             
-            def func(template_func_name=s):
-                return self.call_project(template_func_name, "Your default parameter")
+            def func(parameter=""):
+                return self.call_project(func_name, parameter)
 
             # Attach function directly to the instance
             setattr(self, func_name, func)
