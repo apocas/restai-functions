@@ -1,7 +1,7 @@
 import requests
 
 class Restai:
-    def __init__(self, url, api_key, auto_load):
+    def __init__(self, url, api_key, preload=False):
         self.url = url
         self.api_key = api_key
         self.headers = {
@@ -9,15 +9,18 @@ class Restai:
             'Authorization': f'Bearer {api_key}',
         }
         
-        if auto_load == True:
+        if preload == True:
             self.load_functions()
     
     def load_functions(self):
+        self._create_functions_from_strings(self._get_projects_names())
+        
+    def _get_projects_names(self):
         project_names = []
         projects = self._get_projects()
         for project in projects:
             project_names.append(project['name'])
-        self._create_functions_from_strings(project_names)
+        return project_names
 
     def _get_projects(self):
         """Fetches projects from the API."""
@@ -46,15 +49,16 @@ class Restai:
                 f'{self.url}/projects/{project_name}/question',
                 json={'question': parameter},
                 headers=self.headers,
-                timeout=60
+                timeout=120
             )
 
             if response.status_code == 200:
                 response_data = response.json()
                 return response_data.get('answer', "No answer returned")
+            elif response.status_code == 404:
+                raise Exception("Project not found")
             else:
-                print(f"Failed: {response.status_code}, {response.text}")
-                return None
+                raise Exception(f"Failed: {response.status_code}, {response.text}")
 
         except requests.RequestException as e:
             print(f"Encountered an exception: {e}")
@@ -77,3 +81,10 @@ class Restai:
             return getattr(self, func_name)(parameter)
         else:
             raise AttributeError(f"Function '{func_name}' not found")
+
+    def __getattr__(self, name):
+        """Dynamically create a function if it doesn't exist."""
+        def method(parameter=""):
+            return self.call_project(name, parameter)
+        setattr(self, name, method)
+        return method
