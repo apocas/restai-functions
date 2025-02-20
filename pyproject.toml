@@ -1,6 +1,6 @@
 [project]
 name = "restai-functions"
-version = "0.0.3"
+version = "0.0.4"
 authors = [{ name = "Pedro Dias", email = "petermdias@gmail.com" }]
 description = "Call RESTai projects using direct functions in Python"
 readme = "README.md"
